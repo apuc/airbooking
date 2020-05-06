@@ -163,21 +163,21 @@ class V1Controller extends Controller
         $mail = new PHPMailer;
         $mail->CharSet = 'utf-8';
 
-        $body = 'Рейс "' . $flight . '" был отменен.';
+        $body = str_replace('{FLIGHT}', $flight, Yii::$app->params['message_body']);
 
         $mail->isSMTP();
         $mail->Host = 'smtp.mail.ru';
         $mail->SMTPAuth = true;
-        $mail->Username = 'letter.verification@mail.ru';
-        $mail->Password = '$dk820&123';
+        $mail->Username = Yii::$app->params['notification_email'];
+        $mail->Password = Yii::$app->params['password'];
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
 
-        $mail->setFrom('letter.verification@mail.ru');
+        $mail->setFrom(Yii::$app->params['notification_email']);
         $mail->addAddress($email);
         $mail->isHTML(true);
 
-        $mail->Subject = 'Авиакомпания Х';
+        $mail->Subject = Yii::$app->params['message_title'];
         $mail->Body = $body;
         $mail->AltBody = '';
 
