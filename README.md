@@ -1,10 +1,16 @@
 <h4>Установка</h4>
 1) Клонировать проект с репозитория https://github.com/apuc/airbooking
-2) Находясь в папке проекта ыполнить команду: composer install
-3) Затем выполнить команду php init
-4) Создать БД и изменить данные подключения в common/config/main-local.php
-5) Выполнить команду php yii migrate
-6) В файле frontend/config/params.php нужно настроить данные для отправки уведомлений на почту
+2) Находясь в папке проекта ыполнить команду: <b>composer install</b>
+3) Затем выполнить команду <b>php init</b>
+4) Создать БД и изменить данные подключения в <b>common/config/main-local.php</b>
+5) Выполнить команду <b>php yii migrate</b>
+6) В файле console/config/params.php нужно настроить данные для отправки уведомлений на почту
+7) Настроить cron для автоматической отправки уведомлений об отмене рейса.<br>
+Для этого выполнить команду: <b>crontab -e</b><br>
+В открывшемся файле добавить строку:<br>
+<b> */60 * * * * /var/www/domains/airbooking/yii flight/cancel /dev/null 2>&1 </b>, где <br>
+60 - частота выполнения команды в минутах<br>
+/var/www/domains/airbooking/ - путь к папке домена<br>
 
 <h4>Инструкция к Api</h4>
 1) Бронироание билета <br>
@@ -27,14 +33,9 @@
    Экшн: <b>домен/api/v1/cancel-flight</b><br>
    Пример данных: <b>{"data":{"flight_id":1 }}</b><br>
    Тип запроса: <b>patch</b><br><br>
-   
 6) Окончание продажи билетов <br>
    Экшн: <b>домен/api/v1/completed-ticket-sales</b><br>
    Пример данных: <b>{"data":{"flight_id":1 }}</b><br>
-   Тип запроса: <b>patch</b><br><br>
-   
-7) Отправка уведомлений
-   Экшн: <b>домен/api/v1/flight-canceled</b><br>
    Тип запроса: <b>patch</b><br><br>
                
 <h3>Описание данных</h3><br>
